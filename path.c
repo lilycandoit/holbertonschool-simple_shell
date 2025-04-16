@@ -25,7 +25,7 @@ char *find_command_path(char *cmd)
     if (!path_env)
         return (NULL);
 
-    path_copy = strdup(path_env); /* will be modified later*/
+    path_copy = strdup(path_env); /* to be modified later*/
     if (!path_copy)
         return (NULL);
 

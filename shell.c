@@ -13,7 +13,7 @@ void execute_command(char *line)
 {
 	char *token;
 	pid_t pid;
-	int i;
+	int i, j;
 	char *cmd_path = NULL;
 	char *argv[MAX_ARGS];
 
@@ -27,6 +27,18 @@ void execute_command(char *line)
 		token = strtok(NULL, " ");
 	}
 	argv[i] = NULL; /* execve needs argv to end with NULL */
+
+	/* handle built-in env command */
+	if (strcmp(argv[0], "env") == 0)
+	{
+		j = 0;
+		while (environ[j])
+		{
+			printf("%s\n", environ[j]);
+			j++;
+		}
+		return; /* printing done, no fork, no execute */
+	}
 
 	if (argv[0] == NULL)
 		return;
