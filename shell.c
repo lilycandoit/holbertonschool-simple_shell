@@ -94,7 +94,12 @@ void simple_shell(void)
 		if (line[read -1] == '\n' )
 			line[read - 1] = '\0';
 
-		if (line[0] == '\0') /* skip empty input */
+		/* handle exit command */
+		if (strcmp(line, "exit") == 0)
+			break;
+
+		/* skip empty input, go back to show prompt again */
+		if (line[0] == '\0')
 			continue;
 
 		/* pass the line to handle execution*/
