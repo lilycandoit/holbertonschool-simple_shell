@@ -10,5 +10,6 @@
 extern char **environ;
 
 void simple_shell(void);
+char *find_command_path(char *cmd);
 
 #endif

@@ -1,5 +1,5 @@
 #include "shell.h"
-#define MAX_ARGS64
+#define MAX_ARGS 64
 
 /**
 * execute_command - take a string and execute it
@@ -14,12 +14,13 @@ void execute_command(char *line)
 	char *token;
 	pid_t pid;
 	int i;
-	char *argv[MAX_ARGS64];
+	char *cmd_path = NULL;
+	char *argv[MAX_ARGS];
 
 	i = 0;
+	/* tokenize line into argv[] */
 	token = strtok(line, " ");
-
-	while (token != NULL && i < MAX_ARGS64 - 1)
+	while (token != NULL && i < MAX_ARGS - 1)
 	{
 
 		argv[i++] = token;
@@ -30,14 +31,26 @@ void execute_command(char *line)
 	if (argv[0] == NULL)
 		return;
 
-	pid = fork(); /* create a new child process */
+	// Check if argv[0] is a full path or needs PATH setup
+	if (strchr(argv[0], '/'))
+		cmd_path = strdup(argv[0]);
+	else
+		cmd_path = find_command_path(argv[0]);
+
+	// If not found, print error & SKIP fork()
+	if (!cmd_path)
+	{
+		fprintf(stderr, "%s: command not found\n", argv[0]);
+		return;
+	}
+
+	pid = fork(); /* only fork if command exist */
 	if (pid == 0)
 	{
-		/* replace child with the new program */
-		if (execve(argv[0], argv, environ) == -1){
-			perror(argv[0]);
-			exit(EXIT_FAILURE);
-		}
+		execve(cmd_path, argv, environ);
+		perror(argv[0]);
+		free(cmd_path);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
 	{
@@ -48,6 +61,8 @@ void execute_command(char *line)
 	{
 		perror("fork failed");
 	}
+
+	free(cmd_path);
 }
 
 /**
