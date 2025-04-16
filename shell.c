@@ -1,4 +1,5 @@
 #include "shell.h"
+#define MAX_ARGS64
 
 /**
 * execute_command - take a string and execute it
@@ -13,12 +14,12 @@ void execute_command(char *line)
 	char *token;
 	pid_t pid;
 	int i;
-	char *argv[64];
+	char *argv[MAX_ARGS64];
 
 	i = 0;
 	token = strtok(line, " ");
 
-	while (token != NULL)
+	while (token != NULL && i < MAX_ARGS64 - 1)
 	{
 
 		argv[i++] = token;
@@ -34,8 +35,8 @@ void execute_command(char *line)
 	{
 		/* replace child with the new program */
 		if (execve(argv[0], argv, environ) == -1){
-			printf("%s: No such file or directory\n", argv[0]);
-			exit(1);
+			perror(argv[0]);
+			exit(EXIT_FAILURE);
 		}
 	}
 	else if (pid > 0)
