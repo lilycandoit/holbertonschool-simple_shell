@@ -1,0 +1,75 @@
+.TH simple_shell 1 "April 2025" "Holberton School" "User Commands"
+
+.SH NAME
+simple_shell \- A simple UNIX command line interpreter
+
+.SH SYNOPSIS
+.B simple_shell
+.br
+Runs a custom UNIX shell from the Holberton School curriculum.
+
+.SH DESCRIPTION
+The
+.B simple_shell
+is a minimalist implementation of a UNIX command line interpreter, written in C. It replicates basic functionalities of
+.I /bin/sh ,
+handling command execution with or without arguments, resolving commands through the
+.B PATH
+environment variable, and supporting basic built-in commands like
+.B exit
+and
+.B env .
+
+.SH FEATURES
+.br
+\- Displays a prompt and waits for user input
+.br
+\- Executes commands using
+.B execve(2)
+in a child process
+.br
+\- Handles command arguments and the
+.B PATH
+lookup
+.br
+\- Detects end-of-file (Ctrl+D)
+.br
+\- Built-in commands:
+.br
+.TP
+.B exit
+Exit the shell
+.br
+.TP
+.B env
+Display the current environment variables
+.br
+
+.SH USAGE
+To compile the shell:
+.br
+  gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+.br
+To run the shell:
+.br
+Examples:
+.br
+  cisfun$ /bin/ls
+.br
+  cisfun$ ls -l /tmp
+.br
+  cisfun$ env
+.br
+  cisfun$ exit
+
+
+.SH SEE ALSO
+.BR isatty (3),
+.BR getpid (2),
+.BR getline (3),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2),
+.BR getenv (3)
+
+

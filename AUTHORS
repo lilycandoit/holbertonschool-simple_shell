@@ -1,0 +1,6 @@
+# This file lists all individuals who have contributed content to the repository.
+# It was generated automatically from the Git commit history.
+# Run: git log --format='%aN' | sort -u > AUTHORS
+
+lily
+lilycandoit
