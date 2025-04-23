@@ -76,16 +76,15 @@ void execute_command(char *line, int line_number)
 	else
 		cmd_path = find_command_path(argv[0]);
 
-	/* If not found, print error & SKIP fork() */
-	if (!cmd_path)
-	{
-		fprintf(stderr, "./hsh: %d: %s: not found\n",line_number, argv[0]);
-		exit(127);
-	}
-
-	pid = fork(); /* only fork if command exist */
+	pid = fork();
 	if (pid == 0)
 	{
+		if (!cmd_path) /* command not found */
+		{
+			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
+			exit(127); /* only child exits with error */
+		}
+
 		execve(cmd_path, argv, environ);
 		perror(argv[0]);
 		free(cmd_path);
