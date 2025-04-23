@@ -36,7 +36,7 @@ int only_spaces(const char *str)
 * - execute command in child process
 * - parent waits for the child to finish
 */
-void execute_command(char *line)
+void execute_command(char *line, int line_number)
 {
 	char *token;
 	pid_t pid;
@@ -79,8 +79,8 @@ void execute_command(char *line)
 	/* If not found, print error & SKIP fork() */
 	if (!cmd_path)
 	{
-		fprintf(stderr, "%s: command not found\n", argv[0]);
-		return;
+		fprintf(stderr, "./hsh: %d: %s: not found\n",line_number, argv[0]);
+		exit(127);
 	}
 
 	pid = fork(); /* only fork if command exist */
@@ -117,6 +117,7 @@ void simple_shell(void)
 	char *line = NULL; /* store user input */
 	size_t len = 0;
 	ssize_t read;
+	int line_number = 1;
 
 	while (1)
 	{
@@ -140,9 +141,9 @@ void simple_shell(void)
 		/* skip empty input, go back to show prompt again */
 		if (line[0] == '\0' || only_spaces(line))
 			continue;
-
 		/* pass the line to handle execution*/
-		execute_command(line);
+		execute_command(line, line_number);
+		line_number++;
 	}
 	free(line); /* clean up memory */
 }
