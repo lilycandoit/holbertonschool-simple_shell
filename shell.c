@@ -2,6 +2,33 @@
 #define MAX_ARGS 64
 
 /**
+ * is_whitespace - to check whitespace char
+ * Return: int
+ */
+
+int is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n');
+}
+
+/**
+ * only_spaces - to check whitespace input
+ * Return: 0 if no whitespace, 1 if whitespace
+ */
+int only_spaces(const char *str)
+{
+    while (*str)
+    {
+        if (!is_whitespace(*str))
+            return 0;
+        str++;
+    }
+    return 1;
+}
+
+
+
+/**
 * execute_command - take a string and execute it
 * @line: raw input line from user
 * Steps:
@@ -111,7 +138,7 @@ void simple_shell(void)
 			break;
 
 		/* skip empty input, go back to show prompt again */
-		if (line[0] == '\0')
+		if (line[0] == '\0' || only_spaces(line))
 			continue;
 
 		/* pass the line to handle execution*/
