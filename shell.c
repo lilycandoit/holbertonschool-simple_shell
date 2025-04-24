@@ -18,7 +18,7 @@ int is_whitespace(char c)
 int only_spaces(const char *str)
 {
     while (*str)
-    {vv
+    {
         if (!is_whitespace(*str))
             return 0;
         str++;
@@ -67,8 +67,13 @@ void execute_command(char *line, int line_number)
 		return; /* printing done, no fork, no execute */
 	}
 
-	if (argv[0] == NULL)
+	if (argv[0] == NULL || *argv[0] == '\0')
+	{
+		fprintf(stderr, "Error: cmd is empty.\n"); /* for debugging */
 		return;
+	}
+
+
 
 	/* Check if argv[0] is a full path or needs PATH setup */
 	if (strchr(argv[0], '/'))
@@ -146,6 +151,5 @@ void simple_shell(void)
 	}
 	free(line); /* clean up memory */
 }
-
 
 

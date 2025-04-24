@@ -39,7 +39,7 @@ char *find_command_path(char *cmd)
 
     /* get PATH environment variable */
     path_env = _getenv("PATH");
-    if (!path_env)
+    if (!path_env || *path_env == '\0')
         return (NULL);
 
     path_copy = strdup(path_env);
@@ -64,4 +64,5 @@ char *find_command_path(char *cmd)
     free(path_copy); /* if no match found */
     return (NULL); /* cannot find any path dir */
 }
+
 
