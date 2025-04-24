@@ -67,9 +67,9 @@ void execute_command(char *line, int line_number, int *status_code)
 		return; /* printing done, no fork, no execute */
 	}
 
+	/* skip if command is missing or an empty string */
 	if (argv[0] == NULL || *argv[0] == '\0')
 	{
-		fprintf(stderr, "Error: cmd is empty.\n"); /* for debugging */
 		return;
 	}
 
@@ -81,16 +81,15 @@ void execute_command(char *line, int line_number, int *status_code)
 	else
 		cmd_path = find_command_path(argv[0]);
 
-	/* if cmd not found, then not fork, exit the process */
-	if (!cmd_path)
-	{
-    		fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
-    		exit(127);  /* Ensure we exit with 127 when command isn't found */
-	}
 	
 	pid = fork();
 	if (pid == 0)
 	{
+		if (!cmd_path)
+		{
+    			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
+    			exit(127);
+		}
 
 		execve(cmd_path, argv, environ);
 		perror(argv[0]);
