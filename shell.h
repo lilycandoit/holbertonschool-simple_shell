@@ -6,6 +6,7 @@
 #include "string.h"
 #include "unistd.h"
 #include "sys/wait.h"
+#include <sys/stat.h>   /* for stat struct and function  */
 
 extern char **environ;
 

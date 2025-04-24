@@ -18,7 +18,7 @@ int is_whitespace(char c)
 int only_spaces(const char *str)
 {
     while (*str)
-    {
+    {vv
         if (!is_whitespace(*str))
             return 0;
         str++;

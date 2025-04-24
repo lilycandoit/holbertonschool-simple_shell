@@ -32,51 +32,36 @@ char *_getenv(const char *name)
 
 char *find_command_path(char *cmd)
 {
-    char *path_env, *path_copy, *dir, *full_path;
-    size_t len;
+    char *path_env, *path_copy, *dir; 
+    char full_path[1024];
+    struct stat st;
 
-    /* if command already includes a slash, try it directly */
-    if (strchr(cmd, '/'))
-    {
-        if (access(cmd, X_OK) == 0)
-            return (strdup(cmd));
-        else
-            return (NULL);
-    }
 
     /* get PATH environment variable */
     path_env = _getenv("PATH");
     if (!path_env)
         return (NULL);
 
-    path_copy = strdup(path_env); /* to be modified later*/
+    path_copy = strdup(path_env);
     if (!path_copy)
-        return (NULL);
+	    return (NULL);
 
     dir = strtok(path_copy, ":");
     while (dir)
     {
-        len = strlen(dir) + strlen(cmd) + 2; /* 1 for slash and 1 for null terminator */
 
-        full_path = malloc(len);
-        if (!full_path)
-        {
-            free(full_path);
-            return (NULL);
-        }
+        snprintf(full_path, sizeof(full_path), "%s/%s", dir, cmd); /* get the full path*/
 
-        sprintf(full_path, "%s/%s", dir, cmd); /* format the full path*/
-
-        if (access(full_path, X_OK) == 0)
+        if (stat(full_path, &st) == 0)
         {
             free(path_copy);
-            return (full_path); /* success */
+            return (strdup(full_path));
         }
 
-        free(full_path); /* clean invalid - non excutetable path */
         dir = strtok(NULL, ":"); /* move to next dir in path*/
     }
 
     free(path_copy); /* if no match found */
     return (NULL); /* cannot find any path dir */
 }
+
