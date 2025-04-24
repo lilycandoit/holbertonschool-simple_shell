@@ -80,17 +80,17 @@ void execute_command(char *line, int line_number, int *status_code)
 		cmd_path = strdup(argv[0]);
 	else
 		cmd_path = find_command_path(argv[0]);
-
 	
-	pid = fork();
-	if (pid == 0)
-	{
-		if (!cmd_path)
+	if (!cmd_path)
 		{
     			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
     			exit(127);
 		}
 
+	
+	pid = fork();
+	if (pid == 0)
+	{
 		execve(cmd_path, argv, environ);
 		perror(argv[0]);
 		free(cmd_path);
