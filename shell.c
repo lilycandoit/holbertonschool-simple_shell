@@ -17,13 +17,13 @@ int is_whitespace(char c)
  */
 int only_spaces(const char *str)
 {
-    while (*str)
-    {
-        if (!is_whitespace(*str))
-            return 0;
-        str++;
-    }
-    return 1;
+	while (*str)
+	{
+		if (!is_whitespace(*str))
+			return 0;
+		str++;
+	}
+	return 1;
 }
 
 
@@ -80,14 +80,14 @@ void execute_command(char *line, int line_number, int *status_code)
 		cmd_path = strdup(argv[0]);
 	else
 		cmd_path = find_command_path(argv[0]);
-	
+
 	if (!cmd_path)
 		{
     			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
     			exit(127);
 		}
 
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -101,7 +101,7 @@ void execute_command(char *line, int line_number, int *status_code)
 		wait(&status);
 		if (WIFEXITED(status))
 			*status_code = WEXITSTATUS(status);
-	       	/* to store the status code for exit later */
+		/* to store the status code for exit later */
 	}
 	else
 	{
