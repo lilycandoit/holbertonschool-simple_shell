@@ -43,13 +43,13 @@ void execute_command(char *line)
 	if (argv[0] == NULL)
 		return;
 
-	// Check if argv[0] is a full path or needs PATH setup
+	/* Check if argv[0] is a full path or needs PATH setup */
 	if (strchr(argv[0], '/'))
 		cmd_path = strdup(argv[0]);
 	else
 		cmd_path = find_command_path(argv[0]);
 
-	// If not found, print error & SKIP fork()
+	/* If not found, print error & SKIP fork() */
 	if (!cmd_path)
 	{
 		fprintf(stderr, "%s: command not found\n", argv[0]);
@@ -85,7 +85,7 @@ void execute_command(char *line)
 * Return: void
 */
 
-void simple_shell(void)
+void simple_shell(void)`
 {
 	char *line = NULL; /* store user input */
 	size_t len = 0;
