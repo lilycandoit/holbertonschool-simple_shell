@@ -36,11 +36,11 @@ int only_spaces(const char *str)
 * - execute command in child process
 * - parent waits for the child to finish
 */
-void execute_command(char *line, int line_number)
+void execute_command(char *line, int line_number, int *status_code)
 {
 	char *token;
 	pid_t pid;
-	int i, j;
+	int i, j, status;
 	char *cmd_path = NULL;
 	char *argv[MAX_ARGS];
 
@@ -99,8 +99,10 @@ void execute_command(char *line, int line_number)
 	}
 	else if (pid > 0)
 	{
-		wait(NULL);
-		/* pauses the parent until the child process ends. */
+		wait(&status);
+		if (WIFEXITED(status))
+			*status_code = WEXITSTATUS(status);
+	       	/* to store the status code for exit later */
 	}
 	else
 	{
@@ -124,6 +126,7 @@ void simple_shell(void)
 	size_t len = 0;
 	ssize_t read;
 	int line_number = 1;
+	int status_code = 0;
 
 	while (1)
 	{
@@ -142,13 +145,16 @@ void simple_shell(void)
 
 		/* handle exit command */
 		if (strcmp(line, "exit") == 0)
-			break;
+		{
+			free(line);
+			exit(status_code);
+		}
 
 		/* skip empty input, go back to show prompt again */
 		if (line[0] == '\0' || only_spaces(line))
 			continue;
 		/* pass the line to handle execution*/
-		execute_command(line, line_number);
+		execute_command(line, line_number, &status_code);
 		line_number++;
 	}
 	free(line); /* clean up memory */
