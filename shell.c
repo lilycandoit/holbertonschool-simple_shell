@@ -90,10 +90,10 @@ void execute_command(char *line, int line_number, int *status_code)
 
 	cmd_path = build_argv_and_path(line, argv);
 	if (!cmd_path) /* if no path found or empty path */
-		{
-			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
-			exit(127);
-		}
+	{
+		fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
+		exit(127);
+	}
 
 	if (handle_env_builtin(argv))
 	{
