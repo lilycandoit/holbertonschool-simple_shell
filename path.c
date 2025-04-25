@@ -44,7 +44,10 @@ char *find_command_path(char *cmd)
 
 	path_copy = strdup(path_env);
 	if (!path_copy)
+	{
+		free(path_copy);
 		return (NULL);
+	}
 
 	dir = strtok(path_copy, ":");
 	while (dir)

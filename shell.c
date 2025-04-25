@@ -2,9 +2,9 @@
 #define MAX_ARGS 64
 
 /**
- * is_whitespace - to check whitespace char
- * Return: int
- */
+* is_whitespace - to check whitespace char
+* Return: int
+*/
 
 int is_whitespace(char c)
 {
@@ -12,9 +12,9 @@ int is_whitespace(char c)
 }
 
 /**
- * only_spaces - to check whitespace input
- * Return: 0 if no whitespace, 1 if whitespace
- */
+* only_spaces - to check whitespace input
+* Return: 0 if no whitespace, 1 if whitespace
+*/
 int only_spaces(const char *str)
 {
 	while (*str)
@@ -83,10 +83,10 @@ void execute_command(char *line, int line_number, int *status_code)
 
 	if (!cmd_path)
 		{
-    			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
-    			exit(127);
+			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
+			*status_code = 127;
+			return;
 		}
-
 
 	pid = fork();
 	if (pid == 0)
@@ -146,7 +146,7 @@ void simple_shell(void)
 		if (strcmp(line, "exit") == 0)
 		{
 			free(line);
-			exit(status_code);
+			exit(status_code); /* exit with latest command status */
 		}
 
 		/* skip empty input, go back to show prompt again */
