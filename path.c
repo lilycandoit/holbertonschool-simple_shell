@@ -25,7 +25,7 @@ char *_getenv(const char *name)
 }
 
 /**
-* find_command_path - search PATH for an executable matching command
+* find_command_path - search in PATH for an executable matching command
 * @cmd: the command to search for
 * Return: Full path to the command, or NULL if not found
 */
@@ -36,24 +36,25 @@ char *find_command_path(char *cmd)
 	char full_path[1024];
 	struct stat st;
 
+	if (!cmd)
+		return (NULL);
 
-	/* get PATH environment variable */
 	path_env = _getenv("PATH");
+	/* in case PATH is not set or path is empty */
 	if (!path_env || *path_env == '\0')
 		return (NULL);
 
 	path_copy = strdup(path_env);
 	if (!path_copy)
 	{
-		free(path_copy);
 		return (NULL);
 	}
 
 	dir = strtok(path_copy, ":");
 	while (dir)
 	{
-
-		snprintf(full_path, sizeof(full_path), "%s/%s", dir, cmd); /* get the full path*/
+		/* get the full path*/
+		snprintf(full_path, sizeof(full_path), "%s/%s", dir, cmd);
 
 		if (stat(full_path, &st) == 0)
 		{
