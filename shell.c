@@ -20,10 +20,10 @@ int only_spaces(const char *str)
 	while (*str)
 	{
 		if (!is_whitespace(*str))
-			return 0;
+			return (0);
 		str++;
 	}
-	return 1;
+	return (1);
 }
 
 
@@ -84,8 +84,7 @@ void execute_command(char *line, int line_number, int *status_code)
 	if (!cmd_path)
 		{
 			fprintf(stderr, "./hsh: %d: %s: not found\n", line_number, argv[0]);
-			*status_code = 127;
-			return;
+			exit(127);
 		}
 
 	pid = fork();
@@ -139,7 +138,7 @@ void simple_shell(void)
 			break;
 
 		/* Remove newline character */
-		if (line[read -1] == '\n' )
+		if (line[read - 1] == '\n')
 			line[read - 1] = '\0';
 
 		/* handle exit command */
