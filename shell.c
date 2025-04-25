@@ -3,6 +3,7 @@
 
 /**
 * is_whitespace - to check whitespace char
+* @c: the character to be checked
 * Return: int
 */
 int is_whitespace(char c)
@@ -12,6 +13,7 @@ int is_whitespace(char c)
 
 /**
 * only_spaces - to check whitespace input
+* @str: the string input to be checked
 * Return: 0 if no whitespace, 1 if whitespace
 */
 int only_spaces(const char *str)
@@ -27,6 +29,7 @@ int only_spaces(const char *str)
 
 /**
 * handle_env_builtin - to handle env built-in command
+* @argv: the array of argument strings
 * Return: 0
 */
 int handle_env_builtin(char **argv)
@@ -47,6 +50,8 @@ int handle_env_builtin(char **argv)
 
 /**
 * build_argv_and_path - to tokenize and resolve path
+* @line: the user input
+* @argv: the array of argument strings
 * Return: the command_path
 */
 char *build_argv_and_path(char *line, char **argv)
