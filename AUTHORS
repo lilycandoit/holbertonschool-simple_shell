@@ -3,7 +3,5 @@
 # Run: git log --format='%aN' | sort -u > AUTHORS
 
 Kas <Kas@gmail.com>
-lily <hueduong288@gmail.com>
-lily <hueuduong288@gmail.com>
-lilycandoit <119943777+lilycandoit@users.noreply.github.com>
-root <Kassandra@gmail.com>
+Tas <Tas@email.com>
+lily <lily@gmail.com>
