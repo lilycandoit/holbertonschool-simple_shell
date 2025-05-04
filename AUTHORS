@@ -2,5 +2,5 @@
 # It was generated automatically from the Git commit history.
 # Run: git log --format='%aN' | sort -u > AUTHORS
 
-lily
-lilycandoit
+lily <hueduong288@gmail.com>
+root <Kassandra@gmail.com>
