@@ -88,3 +88,8 @@ We were only allowed to use the following system calls and standard library func
 - `getline`, `getpid`, `isatty`, `kill`, `malloc`, `open`, `opendir`, `read`
 - `perror`, `printf`, `putchar`, `strtok`, `wait`, `waitpid`, `write`
 - And all functions from `string.h`
+
+## Authors
+- Kassandra
+- Tas
+- Lily
