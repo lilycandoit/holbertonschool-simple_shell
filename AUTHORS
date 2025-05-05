@@ -1,6 +1,6 @@
 # This file lists all individuals who have contributed content to the repository.
 # It was generated automatically from the Git commit history.
-# Run: git log --format='%aN' | sort -u > AUTHORS
+# Run: git log --format='%aN <%aE>' | sort -u > AUTHORS
 
 Kas <Kas@gmail.com>
 Tas <Tas@email.com>
